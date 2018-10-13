@@ -1,0 +1,64 @@
+<!Doctype html>
+
+<html>
+<head>
+    <title></title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" >
+    <script type="text/javascript" src="jQuery.js"  ></script>
+    <script type="text/javascript" src="js/script.js"  ></script>
+
+</head>
+<body>
+<div id="container" class="flex">
+    <div id="sidebar" class="flex-column">
+      <div class="content">
+        <div class="size">
+            <label for="size">Size</label>
+            <!--<input type="number" id="size" value="5">-->
+            <input type="range" min="1" max="100" value="5" class="slider" id="size">
+        </div>
+
+        <div class="color">
+            <label for="color">Color</label>
+            <input type="color" id="color">
+        </div>
+
+        <div class="shapes">
+            <input type="button" id="draw" value="draw">
+            <input type="button" id="rectangle" value="rectangle">
+            <input type="button" id="circle" value="circle">
+            <input type="button" id="line" value="line">
+
+        </div>
+        <div class= "clear">
+            <input type="button" id="eraser" value="Eraser">
+            <input type="button" id="eraseAll" value="Erase All">
+        </div>
+
+        <div class="fill">
+            <label for="fill" >Fill</label>
+            <input type="checkbox" id="fill" value="fill">
+
+            <label for="nofill" >No Fill</label>
+            <input type="checkbox" id="nofill" value="nofill">
+        </div>
+        <div>
+            <label for="symetrieX" >Horizontale</label>
+            <input type="checkbox" id="symetrieX" value="symetrieX">
+
+            <label for="symetrieY" >Verticale</label>
+            <input type="checkbox" id="symetrieY" value="symetrieY">
+        </div>
+      </div>
+    </div>
+
+    <div id="canvaDiv">
+        <div class="maincontent">
+            <canvas class="canvas" width=1556 height=700></canvas>
+        </div>
+    </div>
+
+<!-- </div> -->
+</div>
+</body>
+</html>

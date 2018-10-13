@@ -1,0 +1,22 @@
+html{
+    margin: -8px;
+}
+#sidebar{
+    background-color: #fff3b9;
+}
+.maincontent{
+    border: 2px solid black;
+}
+
+.border-black{
+    border: 2px solid black;
+}
+
+input{
+    height: 29px;
+    margin-bottom: 10px;
+}
+
+.content{
+margin-left: 46%
+}
