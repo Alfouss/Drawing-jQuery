@@ -1,42 +1,32 @@
 $(document).ready(function() {
     init();
 });
-let lastX, lastY;
-let ctx;
 
-let mousePressed = false;
-let eraser = false;
-let isFirst = true;
+let canvas, lastX, lastY, ctx, canvasWidth, canvasHeight;
 
+let mousePressed = false, eraser = false, isFirst = true;
 let mode = 'draw';
-let rempli;
-let lol ;
-let symetrieH;
-let symetrieV;
+let rempli, sizeVal, symetrieH, symetrieV;
 
 
-function init() {
-
-    var  canvas = $('.canvas');
+function init() { canvas = $('.canvas');
     for(var i = 0; i < canvas.length; i++ ){
         canvas = $('.canvas')[i];
     }
-    console.log(canvas);
+    canvasHeight = canvas.clientHeight // height of canvas
+    canvasWidth = canvas.clientWidth // width of canvas
 
     ctx = canvas.getContext("2d");
-    // $('.canvas')[0].getContext("2d");
 
     $('.canvas').mousedown(function (e) {
         mousePressed = true;
         switch (mode) {
             case 'draw':
                 Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, false);
-                // console.log($(this).offset());
-                lol = ctx.lineWidth = $('#size').val();
+                sizeVal = ctx.lineWidth = $('#size').val();
                 ctx.beginPath();
-                ctx.arc(e.offsetX, e.offsetY, lol, 0, Math.PI + 2);
+                ctx.arc(e.offsetX, e.offsetY, sizeVal, 0, Math.PI + 2);
                 ctx.fill();
-                // console.log(this);
                 break;
 
             case 'rectangle':
@@ -48,7 +38,6 @@ function init() {
                 break;
             case 'line':
                 line(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top);
-                // console.log(e.pageX - $(this).offset().left);
                 break;
         }
     });
@@ -59,11 +48,11 @@ function init() {
         }
     });
 
-    $('.canvas').mouseup(function (e) {
+    $('.canvas').mouseup(function () {
         mousePressed = false;
     });
 
-    $('.canvas').mouseleave(function (e) {
+    $('.canvas').mouseleave(function () {
         mousePressed = false;
     });
 
@@ -75,7 +64,7 @@ function init() {
     $('#eraseAll').click(function() {
         ctx.clearRect(0, 0, $('.canvas').width, $('.canvas').height);
     });
-    // $('#eraserAll').click(function () { eraser = !eraser; });
+
     $('#draw').click(function () {
         mode = 'draw';
     });
@@ -103,8 +92,6 @@ function init() {
     })
 }
 function Draw(x, y, isDown) {
-    // console.log(ctx.lineWidth = $('#size').val());
-    // console.log('hello');
     if (isDown) {
         ctx.beginPath();
         ctx.strokeStyle = $('#color').val();
@@ -121,15 +108,15 @@ function Draw(x, y, isDown) {
             ctx.moveTo(lastX, lastY);
             ctx.lineTo(x, y);
             if(symetrieV === true){
-                ctx.moveTo(1556 - lastX, lastY);
-                ctx.lineTo(1556 - x , y);
+                ctx.moveTo(canvasWidth - lastX, lastY);
+                ctx.lineTo(canvasWidth - x , y);
                 ctx.closePath();
                 ctx.stroke()
                 symetrieH = false;
             }
             if(symetrieH === true){
-                ctx.moveTo(lastX, 700 - lastY);
-                ctx.lineTo(x , 700 - y);
+                ctx.moveTo(lastX, canvasHeight - lastY);
+                ctx.lineTo(x , canvasHeight - y);
                 ctx.closePath();
                 ctx.stroke()
             }
@@ -140,7 +127,7 @@ function Draw(x, y, isDown) {
     lastX = x;
     lastY = y;
 }
-// console.log(dragStartLocation.x);)
+
 function rectangle(x, y) {
     ctx.beginPath();
     ctx.strokeStyle = $('#color').val();
@@ -178,10 +165,6 @@ function circle(x, y) {
     ctx.lineJoin = "round";
     if (!isFirst) {
         let width = x - lastX;
-        let height = y - lastY;
-        console.log(lastX);
-        console.log(lastY);
-        console.log(width);
 
         ctx.arc(lastX, lastY, Math.abs(width), -1, Math.PI+2, false);
         if(rempli === true) {
@@ -207,8 +190,6 @@ function line(x, y) {
     ctx.lineWidth = $('#size').val();
     ctx.lineJoin = "round";
     if (!isFirst) {
-        let width = x - lastX;
-        // let height = y - lastY;
         ctx.moveTo(lastX, lastY);
         ctx.lineTo(x, y);
         ctx.closePath();
